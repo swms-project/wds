@@ -36,5 +36,17 @@
             <artifactId>looks</artifactId>
             <version>2.2.2</version>
         </dependency>
+
+        <!--Other-->
+        <dependency>
+            <groupId>org.moeaframework</groupId>
+            <artifactId>moeaframework</artifactId>
+            <version>2.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.5</version>
+        </dependency>
     </dependencies>
 </project>

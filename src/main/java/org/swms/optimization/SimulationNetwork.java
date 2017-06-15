@@ -1,0 +1,68 @@
+package org.swms.optimization;
+
+import org.addition.epanet.hydraulic.HydraulicSim;
+import org.addition.epanet.network.Network;
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class SimulationNetwork {
+    private static final Logger logger = Logger.getAnonymousLogger();
+
+    static {
+        logger.setLevel(Level.OFF);
+    }
+
+    private final Network network;
+    private final ScheduleResolver scheduleResolver = new ScheduleResolver();
+    private double energy = 0;
+    private boolean valid = true;
+
+    public SimulationNetwork(Network network) {
+        this.network = network;
+    }
+
+    public SimulationNetwork withPumpingSchedule(List<boolean[]> schedule) {
+        return new SimulationNetwork(scheduleResolver.scheduledNetwork(network, schedule));
+    }
+
+    public void simulate() {
+        try {
+            HydraulicSim sim = new HydraulicSim(network, logger);
+            while (sim.getHtime() < network.getPropertiesMap().getDuration()) {
+                sim.simulateSingleStep();
+                valid = valid && isNegativePressure(sim);
+                if (!valid) return;
+            }
+
+            energy = networkEnergy(sim);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private double networkEnergy(HydraulicSim sim) {
+        return sim.getnPumps().stream().mapToDouble(p -> p.getEnergy(3)).sum();
+    }
+
+    private boolean isNegativePressure(HydraulicSim sim) {
+        return sim.getnNodes().stream().allMatch(node -> node.getSimHead() >= 0);
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public double consumedEnergy() {
+        return energy;
+    }
+
+    public Network getNetwork() {
+        return network;
+    }
+
+    public int pumpsNumber() {
+        return network.getPumps().size();
+    }
+}
