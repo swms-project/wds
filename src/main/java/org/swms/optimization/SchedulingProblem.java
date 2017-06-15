@@ -11,10 +11,12 @@ import java.util.List;
 
 public class SchedulingProblem implements Problem {
     private final SimulationNetwork network;
+    private final OptimizationListener listener;
 
-    public SchedulingProblem(Network network) {
+    public SchedulingProblem(Network network, OptimizationListener listener) {
         super();
         this.network = new SimulationNetwork(network);
+        this.listener = listener;
     }
 
     @Override
@@ -43,6 +45,7 @@ public class SchedulingProblem implements Problem {
         net.simulate();
         solution.setObjective(0, net.consumedEnergy());
         solution.setConstraint(0, net.isValid() ? 0 : 1);
+        listener.newEvaluation(net);
     }
 
     private List<boolean[]> schedule(Solution solution) {
@@ -64,6 +67,5 @@ public class SchedulingProblem implements Problem {
 
     @Override
     public void close() {
-
     }
 }
