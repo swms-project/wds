@@ -7,5 +7,5 @@ import java.util.List;
 public interface OptimizationListener {
     void done(List<Solution> solutions);
 
-    void newEvaluation(SimulationNetwork network);
+    void newEvaluation(SimulationNetwork network, List<Objective> objectives);
 }

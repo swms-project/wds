@@ -3,6 +3,7 @@ package org.swms.cli;
 import org.addition.epanet.network.Network;
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.Variable;
+import org.swms.optimization.Objective;
 import org.swms.optimization.Optimization;
 import org.swms.optimization.OptimizationListener;
 import org.swms.optimization.SimulationNetwork;
@@ -41,16 +42,19 @@ public class Application implements OptimizationListener {
     }
 
     @Override
-    public void newEvaluation(SimulationNetwork network) {
+    public void newEvaluation(SimulationNetwork network, List<Objective> objectives) {
         int count = solutionsCount.incrementAndGet();
         if (network.isValid())
-            report(network, count);
+            report(objectives, count);
         else
             invalidCount.incrementAndGet();
     }
 
-    private void report(SimulationNetwork network, int count) {
-        System.out.printf("#%3d:\t Energy %.2f%n", count, network.consumedEnergy());
+    private void report(List<Objective> objectives, int count) {
+        System.out.printf("#%3d\t|\t", count);
+        for (Objective o : objectives)
+            System.out.printf("%s\t|\t", o);
+        System.out.println();
     }
 
 }

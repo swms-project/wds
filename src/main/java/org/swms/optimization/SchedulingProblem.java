@@ -7,6 +7,7 @@ import org.moeaframework.core.Variable;
 import org.moeaframework.core.variable.EncodingUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SchedulingProblem implements Problem {
@@ -31,7 +32,7 @@ public class SchedulingProblem implements Problem {
 
     @Override
     public int getNumberOfObjectives() {
-        return 1;
+        return 2;
     }
 
     @Override
@@ -43,9 +44,11 @@ public class SchedulingProblem implements Problem {
     public void evaluate(Solution solution) {
         SimulationNetwork net = this.network.withPumpingSchedule(schedule(solution));
         net.simulate();
-        solution.setObjective(0, net.consumedEnergy());
+        List<Objective> objectives = objectives(net, solution);
+        for (int i = 0; i < objectives.size(); i++)
+            solution.setObjective(i, objectives.get(i).value);
         solution.setConstraint(0, net.isValid() ? 0 : 1);
-        listener.newEvaluation(net);
+        listener.newEvaluation(net, objectives);
     }
 
     private List<boolean[]> schedule(Solution solution) {
@@ -55,6 +58,24 @@ public class SchedulingProblem implements Problem {
             schedule.add(EncodingUtils.getBinary(variable));
         }
         return schedule;
+    }
+
+    private List<Objective> objectives(SimulationNetwork net, Solution solution) {
+        return Arrays.asList(
+                    new Objective("Energy", net.consumedEnergy()),
+                    new Objective("Fragments", fragments(schedule(solution))));
+    }
+
+    private int fragments(List<boolean[]> schedule) {
+        int res = 0;
+        for (boolean[] s : schedule) {
+            boolean prev = false;
+            for (boolean b : s) {
+                if (b && !prev) ++res;
+                prev = b;
+            }
+        }
+        return res;
     }
 
     @Override
