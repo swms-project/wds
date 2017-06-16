@@ -1,6 +1,7 @@
 package org.swms.optimization;
 
 import org.addition.epanet.hydraulic.HydraulicSim;
+import org.addition.epanet.hydraulic.structures.SimulationNode;
 import org.addition.epanet.network.Network;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class SimulationNetwork {
     private final Network network;
     private final ScheduleResolver scheduleResolver = new ScheduleResolver();
     private double energy = 0;
+    private double head = 0;
     private boolean valid = true;
 
     public SimulationNetwork(Network network) {
@@ -33,6 +35,7 @@ public class SimulationNetwork {
             while (sim.getHtime() < network.getPropertiesMap().getDuration()) {
                 sim.simulateSingleStep();
                 valid = valid && isNegativePressure(sim);
+                head += networkHead(sim);
                 if (!valid) return;
             }
 
@@ -46,6 +49,10 @@ public class SimulationNetwork {
         return sim.getnPumps().stream().mapToDouble(p -> p.getEnergy(3)).sum();
     }
 
+    private double networkHead(HydraulicSim sim) {
+        return sim.getnNodes().stream().mapToDouble(SimulationNode::getSimHead).sum();
+    }
+
     private boolean isNegativePressure(HydraulicSim sim) {
         return sim.getnNodes().stream().allMatch(node -> node.getSimHead() >= 0);
     }
@@ -56,6 +63,10 @@ public class SimulationNetwork {
 
     public double consumedEnergy() {
         return energy;
+    }
+
+    public double totalHead() {
+        return head;
     }
 
     public Network getNetwork() {
