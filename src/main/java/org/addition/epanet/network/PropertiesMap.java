@@ -23,6 +23,8 @@ import org.addition.epanet.network.io.Keywords;
 import org.addition.epanet.util.ENException;
 import org.addition.epanet.util.Utilities;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -284,7 +286,6 @@ public class PropertiesMap {
     public static final String TSTATFLAG = "Tstatflag";
     public static final String UNITSFLAG = "Unitsflag";
     public static final String VISCOS = "Viscos";
-
     public static final String WALLORDER = "WallOrder";
     public static final String[] EpanetObjectsNames = {TSTATFLAG, HSTEP, DUR, QSTEP, CHECK_FREQ,
             MAXCHECK, DMULT, ALTREPORT, QEXP, HEXP, RQTOL, QTOL, BULKORDER, TANKORDER, WALLORDER,
@@ -294,9 +295,65 @@ public class PropertiesMap {
             DEF_PAT_ID, MAP_FNAME, TRACE_NODE, EXTRA_ITER, CTOL, DIFFUS, DAMP_LIMIT, VISCOS, SPGRAV, MAXITER,
             HACC, HTOL, EMAX
     };
-
+    private String altReport;
+    private Double bulkOrder;
+    private int checkFreq;
+    private String chemName;
+    private String chemUnits;
+    private Double climit;
+    private Double ctol;
+    private Double dampLimit;
+    private Double dcost;
+    private String defPatID;
+    private Double diffus;
+    private Double dmult;
+    private long dur;
+    private Double ecost;
+    private Double emax;
+    private boolean energyflag;
+    private String epat;
+    private Double epump;
+    private int extraIter;
+    private FlowUnitsType flowflag;
+    private FormType formflag;
+    private Double hacc;
+    private Double hexp;
+    private long hstep;
+    private Double htol;
+    private Hydtype hydflag;
+    private String hydFname;
+    private Double kbulk;
+    private Double kwall;
+    private ReportFlag linkflag;
+    private String mapFname;
+    private int maxCheck;
+    private int maxIter;
+    private boolean messageflag;
+    private ReportFlag nodeflag;
+    private int pageSize;
+    private PressUnitsType pressflag;
+    private long pstart;
+    private long pstep;
+    private Double qexp;
+    private long qstep;
+    private Double qtol;
+    private QualType qualflag;
+    private Double rfactor;
+    private Double RQtol;
+    private long rstart;
+    private long rstep;
+    private long rulestep;
+    private Double spGrav;
+    private StatFlag statflag;
+    private boolean summaryflag;
+    private Double tankOrder;
+    private String traceNode;
+    private long tstart;
+    private TstatType tstatflag;
+    private UnitsType unitsflag;
+    private Double viscos;
+    private Double wallOrder;
     private Map<String, Object> values;
-
 
     public PropertiesMap() {
         values = new HashMap<String, Object>();
@@ -315,143 +372,308 @@ public class PropertiesMap {
     }
 
     public String getAltReport() throws ENException {
-        return (String) get(ALTREPORT);
+        return altReport;
+    }
+
+    public void setAltReport(String str) throws ENException {
+        this.altReport = str;
+        values.put(ALTREPORT, str);
     }
 
     public Double getBulkOrder() throws ENException {
-        return (Double) get(BULKORDER);
+        return bulkOrder;
+    }
+
+    public void setBulkOrder(Double bulkOrder) throws ENException {
+        this.bulkOrder = bulkOrder;
+        values.put(BULKORDER, bulkOrder);
     }
 
     public Integer getCheckFreq() throws ENException {
-        return (Integer) get(CHECK_FREQ);
+        return checkFreq;
+    }
+
+    public void setCheckFreq(int checkFreq) throws ENException {
+        this.checkFreq = checkFreq;
+        values.put(CHECK_FREQ, checkFreq);
     }
 
     public String getChemName() throws ENException {
-        return (String) get(CHEM_NAME);
+        return chemName;
+    }
+
+    public void setChemName(String chemName) throws ENException {
+        this.chemName = chemName;
+        values.put(CHEM_NAME, chemName);
     }
 
     public String getChemUnits() throws ENException {
-        return (String) get(CHEM_UNITS);
+        return chemUnits;
+    }
+
+    public void setChemUnits(String chemUnits) throws ENException {
+        this.chemUnits = chemUnits;
+        values.put(CHEM_UNITS, chemUnits);
     }
 
     public Double getClimit() throws ENException {
-        return (Double) get(CLIMIT);
+        return climit;
+    }
+
+    public void setClimit(Double climit) throws ENException {
+        this.climit = climit;
+        values.put(CLIMIT, climit);
     }
 
     public Double getCtol() throws ENException {
-        return (Double) get(CTOL);
+        return ctol;
+    }
+
+    public void setCtol(Double ctol) throws ENException {
+        this.ctol = ctol;
+        values.put(CTOL, ctol);
     }
 
     public Double getDampLimit() throws ENException {
-        return (Double) get(DAMP_LIMIT);
+        return dampLimit;
+    }
+
+    public void setDampLimit(Double dampLimit) throws ENException {
+        this.dampLimit = dampLimit;
+        values.put(DAMP_LIMIT, dampLimit);
     }
 
     public Double getDcost() throws ENException {
-        return (Double) get(DCOST);
+        return dcost;
+    }
+
+    public void setDcost(Double dcost) throws ENException {
+        this.dcost = dcost;
+        values.put(DCOST, dcost);
     }
 
     public String getDefPatId() throws ENException {
-        return (String) get(DEF_PAT_ID);
+        return defPatID;
     }
 
     public Double getDiffus() throws ENException {
-        return (Double) get(DIFFUS);
+        return diffus;
+    }
+
+    public void setDiffus(Double diffus) throws ENException {
+        this.diffus = diffus;
+        values.put(DIFFUS, diffus);
     }
 
     public Double getDmult() throws ENException {
-        return (Double) get(DMULT);
+        return dmult;
+    }
+
+    public void setDmult(Double dmult) throws ENException {
+        this.dmult = dmult;
+        values.put(DMULT, dmult);
     }
 
     public Long getDuration() throws ENException {
-        return (Long) get(DUR);
+        return dur;
+    }
+
+    public void setDuration(long dur) throws ENException {
+        this.dur = dur;
+        values.put(DUR, dur);
     }
 
     public Double getEcost() throws ENException {
-        return (Double) get(ECOST);
+        return ecost;
+    }
+
+    public void setEcost(Double ecost) throws ENException {
+        this.ecost = ecost;
+        values.put(ECOST, ecost);
     }
 
     public Double getEmax() throws ENException {
-        return (Double) get(EMAX);
+        return emax;
+    }
+
+    public void setEmax(Double emax) throws ENException {
+        this.emax = emax;
+        values.put(EMAX, emax);
     }
 
     public Boolean getEnergyflag() throws ENException {
-        return (Boolean) get(ENERGYFLAG);
+        return energyflag;
+    }
+
+    public void setEnergyflag(boolean energyflag) throws ENException {
+        this.energyflag = energyflag;
+        values.put(ENERGYFLAG, energyflag);
     }
 
     public String getEpatId() throws ENException {
-        return (String) get(EPAT_ID);
+        return epat;
     }
 
     public Double getEpump() throws ENException {
-        return (Double) get(EPUMP);
+        return epump;
+    }
+
+    public void setEpump(Double epump) throws ENException {
+        this.epump = epump;
+        values.put(EPUMP, epump);
     }
 
     public Integer getExtraIter() throws ENException {
-        return (Integer) get(EXTRA_ITER);
+        return extraIter;
+    }
+
+    public void setExtraIter(int extraIter) throws ENException {
+        this.extraIter = extraIter;
+        values.put(EXTRA_ITER, extraIter);
     }
 
     public FlowUnitsType getFlowflag() throws ENException {
-        return (FlowUnitsType) get(FLOWFLAG);
+        return flowflag;
+    }
+
+    public void setFlowflag(FlowUnitsType flowflag) throws ENException {
+        this.flowflag = flowflag;
+        values.put(FLOWFLAG, flowflag);
     }
 
     public FormType getFormflag() throws ENException {
-        return (FormType) get(FORMFLAG);
+        return formflag;
+    }
+
+    public void setFormflag(FormType formflag) throws ENException {
+        this.formflag = formflag;
+        values.put(FORMFLAG, formflag);
     }
 
     public Double getHacc() throws ENException {
-        return (Double) get(HACC);
+        return hacc;
+    }
+
+    public void setHacc(Double hacc) throws ENException {
+        this.hacc = hacc;
+        values.put(HACC, hacc);
     }
 
     public Double getHexp() throws ENException {
-        return (Double) get(HEXP);
+        return hexp;
+    }
+
+    public void setHexp(Double hexp) throws ENException {
+        this.hexp = hexp;
+        values.put(HEXP, hexp);
     }
 
     public Long getHstep() throws ENException {
-        return (Long) get(HSTEP);
+        return hstep;
+    }
+
+    public void setHstep(long hstep) throws ENException {
+        this.hstep = hstep;
+        values.put(HSTEP, hstep);
     }
 
     public Double getHtol() throws ENException {
-        return (Double) get(HTOL);
+        return htol;
+    }
+
+    public void setHtol(Double htol) throws ENException {
+        this.htol = htol;
+        values.put(HTOL, htol);
     }
 
     public Hydtype getHydflag() throws ENException {
-        return (Hydtype) get(HYDFLAG);
+        return hydflag;
+    }
+
+    public void setHydflag(Hydtype hydflag) throws ENException {
+        this.hydflag = hydflag;
+        values.put(HYDFLAG, hydflag);
     }
 
     public String getHydFname() throws ENException {
-        return (String) get(HYD_FNAME);
+        return hydFname;
+    }
+
+    public void setHydFname(String hydFname) throws ENException {
+        this.hydFname = hydFname;
+        values.put(HYD_FNAME, hydFname);
     }
 
     public Double getKbulk() throws ENException {
-        return (Double) get(KBULK);
+        return kbulk;
+    }
+
+    public void setKbulk(Double kbulk) throws ENException {
+        this.kbulk = kbulk;
+        values.put(KBULK, kbulk);
     }
 
     public Double getKwall() throws ENException {
-        return (Double) get(KWALL);
+        return kwall;
+    }
+
+    public void setKwall(Double kwall) throws ENException {
+        this.kwall = kwall;
+        values.put(KWALL, kwall);
     }
 
     public ReportFlag getLinkflag() throws ENException {
-        return (ReportFlag) get(LINKFLAG);
+        return linkflag;
+    }
+
+    public void setLinkflag(ReportFlag linkflag) throws ENException {
+        this.linkflag = linkflag;
+        values.put(LINKFLAG, linkflag);
     }
 
     public String getMapFname() throws ENException {
-        return (String) get(MAP_FNAME);
+        return mapFname;
+    }
+
+    public void setMapFname(String mapFname) throws ENException {
+        this.mapFname = mapFname;
+        values.put(MAP_FNAME, mapFname);
     }
 
     public Integer getMaxCheck() throws ENException {
-        return (Integer) get(MAXCHECK);
+        return maxCheck;
+    }
+
+    public void setMaxCheck(int maxCheck) throws ENException {
+        this.maxCheck = maxCheck;
+        values.put(MAXCHECK, maxCheck);
     }
 
     public Integer getMaxIter() throws ENException {
-        return (Integer) get(MAXITER);
+        return maxIter;
+    }
+
+    public void setMaxIter(int maxIter) throws ENException {
+        this.maxIter = maxIter;
+        values.put(MAXITER, maxIter);
     }
 
     public Boolean getMessageflag() throws ENException {
-        return (Boolean) get(MESSAGEFLAG);
+        return messageflag;
+    }
+
+    public void setMessageflag(boolean messageflag) throws ENException {
+        this.messageflag = messageflag;
+        values.put(MESSAGEFLAG, messageflag);
     }
 
     public ReportFlag getNodeflag() throws ENException {
-        return (ReportFlag) get(NODEFLAG);
+        return nodeflag;
+    }
+
+    public void setNodeflag(ReportFlag nodeflag) throws ENException {
+        this.nodeflag = nodeflag;
+        values.put(NODEFLAG, nodeflag);
     }
 
     /**
@@ -468,95 +690,210 @@ public class PropertiesMap {
     }
 
     public Integer getPageSize() throws ENException {
-        return (Integer) get(PAGE_SIZE);
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) throws ENException {
+        this.pageSize = pageSize;
+        values.put(PAGE_SIZE, pageSize);
     }
 
     public PressUnitsType getPressflag() throws ENException {
-        return (PressUnitsType) get(PRESSFLAG);
+        return pressflag;
+    }
+
+    public void setPressflag(PressUnitsType pressflag) throws ENException {
+        this.pressflag = pressflag;
+        values.put(PRESSFLAG, pressflag);
     }
 
     public Long getPstart() throws ENException {
-        return (Long) get(PSTART);
+        return pstart;
+    }
+
+    public void setPstart(long pstart) throws ENException {
+        this.pstart = pstart;
+        values.put(PSTART, pstart);
     }
 
     public Long getPstep() throws ENException {
-        return (Long) get(PSTEP);
+        return pstep;
+    }
+
+    public void setPstep(long pstep) throws ENException {
+        this.pstep = pstep;
+        values.put(PSTEP, pstep);
     }
 
     public Double getQexp() throws ENException {
-        return (Double) get(QEXP);
+        return qexp;
+    }
+
+    public void setQexp(Double qexp) throws ENException {
+        this.qexp = qexp;
+        values.put(QEXP, qexp);
     }
 
     public Long getQstep() throws ENException {
-        return (Long) get(QSTEP);
+        return qstep;
+    }
+
+    public void setQstep(long qstep) throws ENException {
+        this.qstep = qstep;
+        values.put(QSTEP, qstep);
     }
 
     public Double getQtol() throws ENException {
-        return (Double) get(QTOL);
+        return qtol;
+    }
+
+    public void setQtol(Double qtol) throws ENException {
+        this.qtol = qtol;
+        values.put(QTOL, qtol);
     }
 
     public QualType getQualflag() throws ENException {
-        return (QualType) get(QUALFLAG);
+        return qualflag;
+    }
+
+    public void setQualflag(QualType qualflag) throws ENException {
+        this.qualflag = qualflag;
+        values.put(QUALFLAG, qualflag);
     }
 
     public Double getRfactor() throws ENException {
-        return (Double) get(RFACTOR);
+        return rfactor;
+    }
+
+    public void setRfactor(Double rfactor) throws ENException {
+        this.rfactor = rfactor;
+        values.put(RFACTOR, rfactor);
     }
 
     public Double getRQtol() throws ENException {
-        return (Double) get(RQTOL);
+        return RQtol;
+    }
+
+    public void setRQtol(Double RQtol) throws ENException {
+        this.RQtol = RQtol;
+        values.put(RQTOL, RQtol);
     }
 
     public Long getRstart() throws ENException {
-        return (Long) get(RSTART);
+        return rstart;
+    }
+
+    public void setRstart(long rstart) throws ENException {
+        this.rstart = rstart;
+        values.put(RSTART, rstart);
     }
 
     public Long getRstep() throws ENException {
-        return (Long) get(RSTEP);
+        return rstep;
+    }
+
+    public void setRstep(long rstep) throws ENException {
+        this.rstep = rstep;
+        values.put(RSTEP, rstep);
     }
 
     public Long getRulestep() throws ENException {
-        return (Long) get(RULESTEP);
+        return rulestep;
+    }
+
+    public void setRulestep(long rulestep) throws ENException {
+        this.rulestep = rulestep;
+        values.put(RULESTEP, rulestep);
     }
 
     public Double getSpGrav() throws ENException {
-        return (Double) get(SPGRAV);
+        return spGrav;
+    }
+
+    public void setSpGrav(Double spGrav) throws ENException {
+        this.spGrav = spGrav;
+        values.put(SPGRAV, spGrav);
     }
 
     public StatFlag getStatflag() throws ENException {
-        return (StatFlag) get(STATFLAG);
+        return statflag;
+    }
+
+    public void setStatflag(StatFlag statflag) throws ENException {
+        this.statflag = statflag;
+        values.put(STATFLAG, statflag);
     }
 
     public Boolean getSummaryflag() throws ENException {
-        return (Boolean) get(SUMMARYFLAG);
+        return summaryflag;
+    }
+
+    public void setSummaryflag(boolean summaryflag) throws ENException {
+        this.summaryflag = summaryflag;
+        values.put(SUMMARYFLAG, summaryflag);
     }
 
     public Double getTankOrder() throws ENException {
-        return (Double) get(TANKORDER);
+        return tankOrder;
+    }
+
+    public void setTankOrder(Double tankOrder) throws ENException {
+        this.tankOrder = tankOrder;
+        values.put(TANKORDER, tankOrder);
     }
 
     public String getTraceNode() throws ENException {
-        return (String) get(TRACE_NODE);
+        return traceNode;
+    }
+
+    public void setTraceNode(String traceNode) throws ENException {
+        this.traceNode = traceNode;
+        values.put(TRACE_NODE, traceNode);
     }
 
     public Long getTstart() throws ENException {
-        return (Long) get(TSTART);
+        return tstart;
+    }
+
+    public void setTstart(long tstart) throws ENException {
+        this.tstart = tstart;
+        values.put(TSTART, tstart);
     }
 
     public TstatType getTstatflag() throws ENException {
-        return (TstatType) get(TSTATFLAG);
+        return tstatflag;
+    }
+
+    public void setTstatflag(TstatType tstatflag) throws ENException {
+        this.tstatflag = tstatflag;
+        values.put(TSTATFLAG, tstatflag);
     }
 
     public UnitsType getUnitsflag() throws ENException {
-        return (UnitsType) get(UNITSFLAG);
+        return unitsflag;
+    }
+
+    public void setUnitsflag(UnitsType unitsflag) throws ENException {
+        this.unitsflag = unitsflag;
+        values.put(UNITSFLAG, unitsflag);
     }
 
     public Double getViscos() throws ENException {
-        return (Double) get(VISCOS);
+        return viscos;
+    }
+
+    public void setViscos(Double viscos) throws ENException {
+        this.viscos = viscos;
+        values.put(VISCOS, viscos);
     }
 
     public Double getWallOrder() throws ENException {
-        return (Double) get(WALLORDER);
+        return wallOrder;
+    }
+
+    public void setWallOrder(Double wallOrder) throws ENException {
+        this.wallOrder = wallOrder;
+        values.put(WALLORDER, wallOrder);
     }
 
     /**
@@ -625,7 +962,6 @@ public class PropertiesMap {
 
     }
 
-
     /**
      * Insert an object into the map.
      *
@@ -633,240 +969,44 @@ public class PropertiesMap {
      * @param obj  Object reference.
      */
     public void put(String name, Object obj) {
-        values.put(name, obj);
+        Method method = getSetter(name, obj);
+        try {
+            method.invoke(this, obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void setAltReport(String str) throws ENException {
-        put(ALTREPORT, str);
+    private Method getSetter(String name, Object obj) {
+        String methodName = "set" + name;
+        Method method;
+        try {
+            method = getClass().getMethod(methodName, obj.getClass());
+        } catch (NoSuchMethodException e) {
+            try {
+                Field fieldType = obj.getClass().getField("TYPE");
+                Class cls = (Class) fieldType.get(obj.getClass());
+                method = getClass().getMethod(methodName, cls);
+            } catch (Exception e1) {
+                throw new RuntimeException(e1);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return method;
     }
 
-    public void setBulkOrder(Double bulkOrder) throws ENException {
-        put(BULKORDER, bulkOrder);
+    public void setDefPatID(String defPatID) throws ENException {
+        this.defPatID = defPatID;
+        values.put(DEF_PAT_ID, defPatID);
     }
 
-    public void setCheckFreq(int checkFreq) throws ENException {
-        put(CHECK_FREQ, checkFreq);
+    public void setDur(long dur) throws ENException {
+        setDuration(dur);
     }
 
-    public void setChemName(String chemName) throws ENException {
-        put(CHEM_NAME, chemName);
+    public void setEpatID(String epat) throws ENException {
+        this.epat = epat;
+        values.put(EPAT_ID, epat);
     }
-
-    public void setChemUnits(String chemUnits) throws ENException {
-        put(CHEM_UNITS, chemUnits);
-    }
-
-    public void setClimit(Double climit) throws ENException {
-        put(CLIMIT, climit);
-    }
-
-    public void setCtol(Double ctol) throws ENException {
-        put(CTOL, ctol);
-    }
-
-    public void setDampLimit(Double dampLimit) throws ENException {
-        put(DAMP_LIMIT, dampLimit);
-    }
-
-    public void setDcost(Double dcost) throws ENException {
-        put(DCOST, dcost);
-    }
-
-    public void setDefPatId(String defPatID) throws ENException {
-        put(DEF_PAT_ID, defPatID);
-    }
-
-    public void setDiffus(Double diffus) throws ENException {
-        put(DIFFUS, diffus);
-    }
-
-    public void setDmult(Double dmult) throws ENException {
-        put(DMULT, dmult);
-    }
-
-    public void setDuration(long dur) throws ENException {
-        put(DUR, dur);
-    }
-
-    public void setEcost(Double ecost) throws ENException {
-        put(ECOST, ecost);
-    }
-
-    public void setEmax(Double emax) throws ENException {
-        put(EMAX, emax);
-    }
-
-    public void setEnergyflag(boolean energyflag) throws ENException {
-        put(ENERGYFLAG, energyflag);
-    }
-
-    public void setEpatId(String epat) throws ENException {
-        put(EPAT_ID, epat);
-    }
-
-    public void setEpump(Double epump) throws ENException {
-        put(EPUMP, epump);
-    }
-
-    public void setExtraIter(int extraIter) throws ENException {
-        put(EXTRA_ITER, extraIter);
-    }
-
-    public void setFlowflag(FlowUnitsType flowflag) throws ENException {
-        put(FLOWFLAG, flowflag);
-    }
-
-    public void setFormflag(FormType formflag) throws ENException {
-        put(FORMFLAG, formflag);
-    }
-
-    public void setHacc(Double hacc) throws ENException {
-        put(HACC, hacc);
-    }
-
-    public void setHexp(Double hexp) throws ENException {
-        put(HEXP, hexp);
-    }
-
-    public void setHstep(long hstep) throws ENException {
-        put(HSTEP, hstep);
-    }
-
-    public void setHtol(Double htol) throws ENException {
-        put(HTOL, htol);
-    }
-
-    public void setHydflag(Hydtype hydflag) throws ENException {
-        put(HYDFLAG, hydflag);
-    }
-
-    public void setHydFname(String hydFname) throws ENException {
-        put(HYD_FNAME, hydFname);
-    }
-
-    public void setKbulk(Double kbulk) throws ENException {
-        put(KBULK, kbulk);
-    }
-
-    public void setKwall(Double kwall) throws ENException {
-        put(KWALL, kwall);
-    }
-
-    public void setLinkflag(ReportFlag linkflag) throws ENException {
-        put(LINKFLAG, linkflag);
-    }
-
-    public void setMapFname(String mapFname) throws ENException {
-        put(MAP_FNAME, mapFname);
-    }
-
-    public void setMaxCheck(int maxCheck) throws ENException {
-        put(MAXCHECK, maxCheck);
-    }
-
-    public void setMaxIter(int maxIter) throws ENException {
-        put(MAXITER, maxIter);
-    }
-
-    public void setMessageflag(boolean messageflag) throws ENException {
-        put(MESSAGEFLAG, messageflag);
-    }
-
-    public void setNodeflag(ReportFlag nodeflag) throws ENException {
-        put(NODEFLAG, nodeflag);
-    }
-
-    public void setPageSize(int pageSize) throws ENException {
-        put(PAGE_SIZE, pageSize);
-    }
-
-    public void setPressflag(PressUnitsType pressflag) throws ENException {
-        put(PRESSFLAG, pressflag);
-    }
-
-    public void setPstart(long pstart) throws ENException {
-        put(PSTART, pstart);
-    }
-
-    public void setPstep(long pstep) throws ENException {
-        put(PSTEP, pstep);
-    }
-
-    public void setQexp(Double qexp) throws ENException {
-        put(QEXP, qexp);
-    }
-
-    public void setQstep(long qstep) throws ENException {
-        put(QSTEP, qstep);
-    }
-
-    public void setQtol(Double qtol) throws ENException {
-        put(QTOL, qtol);
-    }
-
-    public void setQualflag(QualType qualflag) throws ENException {
-        put(QUALFLAG, qualflag);
-    }
-
-    public void setRfactor(Double rfactor) throws ENException {
-        put(RFACTOR, rfactor);
-    }
-
-    public void setRQtol(Double RQtol) throws ENException {
-        put(RQTOL, RQtol);
-    }
-
-    public void setRstart(long rstart) throws ENException {
-        put(RSTART, rstart);
-    }
-
-    public void setRstep(long rstep) throws ENException {
-        put(RSTEP, rstep);
-    }
-
-    public void setRulestep(long rulestep) throws ENException {
-        put(RULESTEP, rulestep);
-    }
-
-    public void setSpGrav(Double spGrav) throws ENException {
-        put(SPGRAV, spGrav);
-    }
-
-    public void setStatflag(StatFlag statflag) throws ENException {
-        put(STATFLAG, statflag);
-    }
-
-    public void setSummaryflag(boolean summaryflag) throws ENException {
-        put(SUMMARYFLAG, summaryflag);
-    }
-
-    public void setTankOrder(Double tankOrder) throws ENException {
-        put(TANKORDER, tankOrder);
-    }
-
-    public void setTraceNode(String traceNode) throws ENException {
-        put(TRACE_NODE, traceNode);
-    }
-
-    public void setTstart(long tstart) throws ENException {
-        put(TSTART, tstart);
-    }
-
-    public void setTstatflag(TstatType tstatflag) throws ENException {
-        put(TSTATFLAG, tstatflag);
-    }
-
-    public void setUnitsflag(UnitsType unitsflag) throws ENException {
-        put(UNITSFLAG, unitsflag);
-    }
-
-    public void setViscos(Double viscos) throws ENException {
-        put(VISCOS, viscos);
-    }
-
-    public void setWallOrder(Double wallOrder) throws ENException {
-        put(WALLORDER, wallOrder);
-    }
-
-
 }
