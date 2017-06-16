@@ -20,12 +20,10 @@ package org.addition.epanet.network.structures;
 import org.addition.epanet.network.io.Keywords;
 import org.addition.epanet.network.structures.Link.StatType;
 
-import java.io.Serializable;
-
 /**
  * Control statement
  */
-public class Control implements Serializable {
+public class Control {
     /**
      * Control condition type
      */

@@ -23,13 +23,12 @@ import org.addition.epanet.network.io.Keywords;
 import org.addition.epanet.util.ENException;
 import org.addition.epanet.util.Utilities;
 
-import java.io.Serializable;
 import java.util.*;
 
 /**
  * Simulation configuration properties map.
  */
-public class PropertiesMap implements Serializable {
+public class PropertiesMap {
 
     /**
      * Flow units.

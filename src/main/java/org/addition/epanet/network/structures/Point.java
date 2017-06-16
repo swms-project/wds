@@ -17,12 +17,10 @@
 
 package org.addition.epanet.network.structures;
 
-import java.io.Serializable;
-
 /**
  * Simple 2d point.
  */
-public class Point implements Serializable {
+public class Point {
     /**
      * Absciss coordinate.
      */

@@ -22,13 +22,12 @@ import org.addition.epanet.network.structures.*;
 import org.addition.epanet.util.ENException;
 import org.addition.epanet.util.Utilities;
 
-import java.io.Serializable;
 import java.util.*;
 
 /**
  * Hydraulic network structure.
  */
-public class Network implements Serializable {
+public class Network implements Cloneable {
 
     /**
      * Available files types.
@@ -411,7 +410,15 @@ public class Network implements Serializable {
         return res;
     }
 
-//    public Node getNodeByIndex(int idx) {
+    @Override
+    public Network clone() throws CloneNotSupportedException {
+        Network clone = (Network) super.clone();
+        clone.controls = new ArrayList<>(this.controls);
+        clone.rules = new LinkedHashMap<>(this.rules);
+        return clone;
+    }
+
+    //    public Node getNodeByIndex(int idx) {
 //        return  new ArrayList<Node>(nodes.values()).get(idx);
 //    }
 //    public Link getLinkByIndex(int idx) {

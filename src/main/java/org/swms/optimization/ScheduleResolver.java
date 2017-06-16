@@ -4,7 +4,7 @@ import org.addition.epanet.network.Network;
 import org.addition.epanet.network.structures.Control;
 import org.addition.epanet.network.structures.Link;
 import org.addition.epanet.network.structures.Pump;
-import org.apache.commons.lang3.SerializationUtils;
+import org.swms.utils.NetUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class ScheduleResolver {
     }
 
     private Network copyNetwork(Network network) {
-        Network net = SerializationUtils.clone(network);
+        Network net = NetUtils.clone(network);
         net.resetControls();
         net.resetRules();
         return net;

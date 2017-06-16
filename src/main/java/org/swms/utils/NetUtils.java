@@ -1,10 +1,14 @@
 package org.swms.utils;
 
 import org.addition.epanet.network.Network;
-import org.apache.commons.lang3.SerializationUtils;
 
 public class NetUtils {
-    public static Network copy(Network network) {
-        return SerializationUtils.clone(network);
+
+    public static Network clone(Network network) {
+        try {
+            return network.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

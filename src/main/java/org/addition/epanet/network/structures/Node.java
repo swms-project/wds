@@ -19,14 +19,13 @@ package org.addition.epanet.network.structures;
 
 import org.addition.epanet.network.PropertiesMap;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Hydraulic node structure  (junction)
  */
-public class Node implements Comparable<Node>, Serializable {
+public class Node implements Comparable<Node> {
     /**
      * Node id string.
      */

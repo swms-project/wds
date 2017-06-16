@@ -19,12 +19,10 @@ package org.addition.epanet.network.structures;
 
 import org.addition.epanet.network.PropertiesMap;
 
-import java.io.Serializable;
-
 /**
  * Node demand category.
  */
-public class Demand implements Serializable {
+public class Demand {
     /**
      * Baseline demand (Feet^3/t)
      */

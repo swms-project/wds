@@ -17,12 +17,10 @@
 
 package org.addition.epanet.network.structures;
 
-import java.io.Serializable;
-
 /**
  * Text label
  */
-public class Label implements Serializable {
+public class Label {
     /**
      * Label position.
      */

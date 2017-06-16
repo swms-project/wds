@@ -22,13 +22,12 @@ import org.addition.epanet.network.FieldsMap.Type;
 import org.addition.epanet.util.DblList;
 import org.addition.epanet.util.ENException;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
  * 2D graph used to map volume, pump, efficiency and head loss curves.
  */
-public class Curve implements Serializable {
+public class Curve {
 
     /**
      * Computed curve coefficients.

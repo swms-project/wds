@@ -19,13 +19,12 @@ package org.addition.epanet.network.structures;
 
 import org.addition.epanet.util.DblList;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
  * Temporal pattern.
  */
-public class Pattern implements Serializable {
+public class Pattern {
     /**
      * Pattern factors list.
      */

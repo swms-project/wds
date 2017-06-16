@@ -23,14 +23,13 @@ import org.addition.epanet.network.io.Keywords;
 import org.addition.epanet.util.ENException;
 import org.addition.epanet.util.Utilities;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Hydraulic link structure (pipe)
  */
-public class Link implements Comparable<Link>, Serializable {
+public class Link implements Comparable<Link> {
     /**
      * Init links flow resistance values.
      *

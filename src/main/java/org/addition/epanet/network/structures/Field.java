@@ -19,12 +19,10 @@ package org.addition.epanet.network.structures;
 
 import org.addition.epanet.Constants;
 
-import java.io.Serializable;
-
 /**
  * Report field properties.
  */
-public class Field implements Serializable {
+public class Field {
     /**
      * Range limits.
      */

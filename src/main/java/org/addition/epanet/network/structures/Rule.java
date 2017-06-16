@@ -21,12 +21,10 @@ package org.addition.epanet.network.structures;
 import org.addition.epanet.network.io.Keywords;
 import org.addition.epanet.util.Utilities;
 
-import java.io.Serializable;
-
 /**
  * Rule source code class.
  */
-public class Rule implements Serializable {
+public class Rule {
     /**
      * Rule object types.
      */

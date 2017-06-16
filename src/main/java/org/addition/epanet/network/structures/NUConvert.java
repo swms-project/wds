@@ -21,9 +21,7 @@ package org.addition.epanet.network.structures;
 import org.addition.epanet.Constants;
 import org.addition.epanet.network.PropertiesMap;
 
-import java.io.Serializable;
-
-public class NUConvert implements Serializable {
+public class NUConvert {
     public static double convertArea(PropertiesMap.UnitsType type, double value) {
         if (type == PropertiesMap.UnitsType.SI)
             return value / (Constants.MperFT * Constants.MperFT);
