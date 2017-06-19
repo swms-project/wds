@@ -37,8 +37,9 @@ public class SimulationNetwork {
             while (sim.getHtime() < network.getPropertiesMap().getDuration()) {
                 sim.simulateSingleStep();
                 valid = valid && isNegativePressure(sim);
-                head += networkHead(sim);
                 if (!valid) return;
+                if (sim.getHtime() % network.getPropertiesMap().getHstep() == 0)
+                    head += networkHead(sim);
             }
 
             tanks = sim.getnTanks().stream().mapToDouble(SimulationTank::getSimVolume).sum();
