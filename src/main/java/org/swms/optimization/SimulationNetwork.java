@@ -93,7 +93,7 @@ public class SimulationNetwork {
         return network.getPumps().size();
     }
 
-    int fragmentsCount() {
+    public int fragmentsCount() {
         int res = 0;
         for (boolean[] s : schedule) {
             boolean prev = false;

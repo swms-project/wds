@@ -7,7 +7,6 @@ import org.moeaframework.core.Variable;
 import org.moeaframework.core.variable.EncodingUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SchedulingProblem implements Problem {
@@ -44,11 +43,16 @@ public class SchedulingProblem implements Problem {
     public void evaluate(Solution solution) {
         SimulationNetwork net = this.network.withPumpingSchedule(schedule(solution));
         net.simulate();
-        List<Objective> objectives = objectives(net);
-        for (int i = 0; i < objectives.size(); i++)
-            solution.setObjective(i, objectives.get(i).value);
+        setObjectives(net, solution);
         solution.setConstraint(0, net.isValid() ? 0 : 1);
-        listener.newEvaluation(net, objectives);
+        listener.newEvaluation(net);
+    }
+
+    private void setObjectives(SimulationNetwork network, Solution solution) {
+        solution.setObjective(0, network.consumedEnergy());
+        solution.setObjective(1, network.totalHead());
+        solution.setObjective(2, -network.tanks());
+        solution.setObjective(3, network.fragmentsCount());
     }
 
     private List<boolean[]> schedule(Solution solution) {
@@ -58,14 +62,6 @@ public class SchedulingProblem implements Problem {
             schedule.add(EncodingUtils.getBinary(variable));
         }
         return schedule;
-    }
-
-    private List<Objective> objectives(SimulationNetwork net) {
-        return Arrays.asList(
-                new Objective("Energy", net.consumedEnergy()),
-                new Objective("Pressure", net.totalHead()),
-                new Objective("Tanks", -net.tanks()),
-                new Objective("Fragments", net.fragmentsCount()));
     }
 
     @Override
