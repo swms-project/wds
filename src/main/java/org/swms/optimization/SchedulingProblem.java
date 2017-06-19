@@ -44,7 +44,7 @@ public class SchedulingProblem implements Problem {
     public void evaluate(Solution solution) {
         SimulationNetwork net = this.network.withPumpingSchedule(schedule(solution));
         net.simulate();
-        List<Objective> objectives = objectives(net, solution);
+        List<Objective> objectives = objectives(net);
         for (int i = 0; i < objectives.size(); i++)
             solution.setObjective(i, objectives.get(i).value);
         solution.setConstraint(0, net.isValid() ? 0 : 1);
@@ -60,24 +60,12 @@ public class SchedulingProblem implements Problem {
         return schedule;
     }
 
-    private List<Objective> objectives(SimulationNetwork net, Solution solution) {
+    private List<Objective> objectives(SimulationNetwork net) {
         return Arrays.asList(
                 new Objective("Energy", net.consumedEnergy()),
                 new Objective("Pressure", net.totalHead()),
                 new Objective("Tanks", -net.tanks()),
-                new Objective("Fragments", fragments(schedule(solution))));
-    }
-
-    private int fragments(List<boolean[]> schedule) {
-        int res = 0;
-        for (boolean[] s : schedule) {
-            boolean prev = false;
-            for (boolean b : s) {
-                if (b && !prev) ++res;
-                prev = b;
-            }
-        }
-        return res;
+                new Objective("Fragments", net.fragmentsCount()));
     }
 
     @Override

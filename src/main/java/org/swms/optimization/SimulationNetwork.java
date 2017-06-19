@@ -5,6 +5,7 @@ import org.addition.epanet.hydraulic.structures.SimulationNode;
 import org.addition.epanet.hydraulic.structures.SimulationTank;
 import org.addition.epanet.network.Network;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +18,7 @@ public class SimulationNetwork {
     }
 
     private final Network network;
+    private final List<boolean[]> schedule;
     private final ScheduleResolver scheduleResolver = new ScheduleResolver();
     private double energy = 0;
     private double head = 0;
@@ -25,10 +27,16 @@ public class SimulationNetwork {
 
     public SimulationNetwork(Network network) {
         this.network = network;
+        this.schedule = new ArrayList<>();
+    }
+
+    public SimulationNetwork(Network network, List<boolean[]> schedule) {
+        this.network = network;
+        this.schedule = schedule;
     }
 
     public SimulationNetwork withPumpingSchedule(List<boolean[]> schedule) {
-        return new SimulationNetwork(scheduleResolver.scheduledNetwork(network, schedule));
+        return new SimulationNetwork(scheduleResolver.scheduledNetwork(network, schedule), schedule);
     }
 
     public void simulate() {
@@ -83,5 +91,17 @@ public class SimulationNetwork {
 
     public int pumpsNumber() {
         return network.getPumps().size();
+    }
+
+    int fragmentsCount() {
+        int res = 0;
+        for (boolean[] s : schedule) {
+            boolean prev = false;
+            for (boolean b : s) {
+                if (b && !prev) ++res;
+                prev = b;
+            }
+        }
+        return res;
     }
 }
