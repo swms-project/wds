@@ -32,7 +32,7 @@ public class SchedulingProblem implements Problem {
 
     @Override
     public int getNumberOfObjectives() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -62,9 +62,10 @@ public class SchedulingProblem implements Problem {
 
     private List<Objective> objectives(SimulationNetwork net, Solution solution) {
         return Arrays.asList(
-                    new Objective("Energy", net.consumedEnergy()),
-                    new Objective("Pressure", net.totalHead()),
-                    new Objective("Fragments", fragments(schedule(solution))));
+                new Objective("Energy", net.consumedEnergy()),
+                new Objective("Pressure", net.totalHead()),
+                new Objective("Tanks", -net.tanks()),
+                new Objective("Fragments", fragments(schedule(solution))));
     }
 
     private int fragments(List<boolean[]> schedule) {

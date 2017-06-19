@@ -2,6 +2,7 @@ package org.swms.optimization;
 
 import org.addition.epanet.hydraulic.HydraulicSim;
 import org.addition.epanet.hydraulic.structures.SimulationNode;
+import org.addition.epanet.hydraulic.structures.SimulationTank;
 import org.addition.epanet.network.Network;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class SimulationNetwork {
     private final ScheduleResolver scheduleResolver = new ScheduleResolver();
     private double energy = 0;
     private double head = 0;
+    private double tanks = 0;
     private boolean valid = true;
 
     public SimulationNetwork(Network network) {
@@ -39,6 +41,7 @@ public class SimulationNetwork {
                 if (!valid) return;
             }
 
+            tanks = sim.getnTanks().stream().mapToDouble(SimulationTank::getSimVolume).sum();
             energy = networkEnergy(sim);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -67,6 +70,10 @@ public class SimulationNetwork {
 
     public double totalHead() {
         return head;
+    }
+
+    public double tanks() {
+        return tanks;
     }
 
     public Network getNetwork() {
