@@ -15,29 +15,11 @@
     </properties>
 
     <dependencies>
-        <!--EPANet-->
         <dependency>
-            <groupId>org.cheffo</groupId>
-            <artifactId>jeplite</artifactId>
-            <version>0.8.7a</version>
+            <groupId>com.github.swms-project</groupId>
+            <artifactId>Epanet</artifactId>
+            <version>1.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.thoughtworks.xstream</groupId>
-            <artifactId>xstream</artifactId>
-            <version>1.4.9</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>3.15</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jgoodies</groupId>
-            <artifactId>looks</artifactId>
-            <version>2.2.2</version>
-        </dependency>
-
-        <!--Other-->
         <dependency>
             <groupId>org.moeaframework</groupId>
             <artifactId>moeaframework</artifactId>
