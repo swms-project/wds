@@ -29,7 +29,7 @@ public class OptimizationCharts {
 
     public void update(SimulationNetwork solution) {
         if (solution.isValid()) {
-            int count = solutionsCount.incrementAndGet();
+            int count = solutionsCount.getAndIncrement();
             appendData(energySeries, count, solution.consumedEnergy());
             appendData(pressureSeries, count, solution.totalHead());
             appendData(tanksSeries, count, solution.tanks());
