@@ -6,9 +6,11 @@ import org.moeaframework.core.NondominatedPopulation;
 import org.moeaframework.core.Solution;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Optimization {
+    public static final List<String> ALGORITHMS = Arrays.asList("NSGAII", "eMOEA", "Random");
     private final Network network;
     private final OptimizationListener listener;
     private List<Solution> solutions = new ArrayList<>();

@@ -3,14 +3,13 @@ package org.ui.controllers;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.chart.AreaChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.addition.epanet.network.Network;
 import org.moeaframework.core.Solution;
 import org.operations.OpenNetworkFile;
 import org.operations.exceptions.ParseException;
+import org.swms.optimization.Optimization;
 import org.swms.optimization.OptimizationBuilder;
 import org.swms.optimization.OptimizationListener;
 import org.swms.optimization.SimulationNetwork;
@@ -58,6 +57,11 @@ public class HomeController implements OptimizationListener {
     private AreaChart<Integer, Integer> fragmentsChart;
 
     @FXML
+    private TextField runsField;
+    @FXML
+    private ChoiceBox<String> algorithmMenu;
+
+    @FXML
     private Button optimizeBtn;
     @FXML
     private Button openBtn;
@@ -67,6 +71,7 @@ public class HomeController implements OptimizationListener {
         networkInfo = new NetworkInfo(networkName, nodesCount, pipesCount, pumpsCount, tanksCount);
         evaluationProgress = new EvaluationProgress(progressBar, solutionsCount, invalidSolutionsCount);
         optimizationCharts = new OptimizationCharts(energyChart, pressureChart, tanksChart, fragmentsChart);
+        algorithmMenu.getItems().addAll(Optimization.ALGORITHMS);
     }
 
     public void setStage(Stage stage) {
@@ -90,7 +95,13 @@ public class HomeController implements OptimizationListener {
 
     @FXML
     private void handleOptimizeNetwork() {
-        Executors.newSingleThreadExecutor().execute(() -> new OptimizationBuilder(network, this).setAlgorithm("NSGAII").setMaxEvaluations(100).create().run());
+        int runs = Integer.parseInt(runsField.getText());
+        String algorithm = algorithmMenu.getSelectionModel().getSelectedItem();
+        Executors.newSingleThreadExecutor().execute(() -> new OptimizationBuilder(network, this)
+                .setAlgorithm(algorithm)
+                .setMaxEvaluations(runs)
+                .create()
+                .run());
         openBtn.setDisable(true);
         optimizeBtn.setDisable(true);
     }

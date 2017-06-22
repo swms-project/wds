@@ -32,11 +32,12 @@
                     </rowConstraints>
                     <children>
                         <Label text="Runs"/>
-                        <Label text="Label" GridPane.rowIndex="1"/>
+                        <Label text="Algorithm" GridPane.rowIndex="1"/>
                         <Label text="Label" GridPane.rowIndex="2"/>
-                        <TextField text="100" GridPane.columnIndex="1"/>
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <TextField fx:id="runsField" text="100" GridPane.columnIndex="1"/>
                         <TextField GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                        <ChoiceBox fx:id="algorithmMenu" value="NSGAII" prefWidth="150.0" GridPane.columnIndex="1"
+                                   GridPane.rowIndex="1"/>
                     </children>
                 </GridPane>
             </children>
