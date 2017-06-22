@@ -3,7 +3,7 @@ package org.swms.cli;
 import org.addition.epanet.network.Network;
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.Variable;
-import org.swms.optimization.Optimization;
+import org.swms.optimization.OptimizationBuilder;
 import org.swms.optimization.OptimizationListener;
 import org.swms.optimization.SimulationNetwork;
 
@@ -19,7 +19,11 @@ public class Application implements OptimizationListener {
     public void run(Network network) {
         solutionsCount.set(0);
         invalidCount.set(0);
-        new Optimization(network, this).run();
+        new OptimizationBuilder(network, this)
+                .setAlgorithm("NSGAII")
+                .setMaxEvaluations(100)
+                .create()
+                .run();
     }
 
     @Override
@@ -52,7 +56,6 @@ public class Application implements OptimizationListener {
     private void report(SimulationNetwork network, int count) {
         System.out.printf("#%3d\t|\t", count);
         System.out.printf("Energy %.2f\t|\tPressure %.2f\t|\tTanks %.2f\t|\tFragments %d %n", network.consumedEnergy(), network.totalHead(), network.tanks(), network.fragmentsCount());
-
 
     }
 
