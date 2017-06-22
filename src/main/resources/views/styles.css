@@ -1,4 +1,149 @@
 .root {
     -fx-base: #fefefe;
+
+    CHART_COLOR_1: #f3622d;
+    CHART_COLOR_2: #fba71b;
+    CHART_COLOR_3: #57b757;
+    CHART_COLOR_4: #41a9c9;
+    CHART_COLOR_5: #4258c9;
+    CHART_COLOR_6: #9a42c8;
+    CHART_COLOR_7: #c84164;
+    CHART_COLOR_8: #888888;
+     /*20% opacity */
+    CHART_COLOR_1_TRANS_20: #f3622d33;
+    CHART_COLOR_2_TRANS_20: #fba71b33;
+    CHART_COLOR_3_TRANS_20: #57b75733;
+    CHART_COLOR_4_TRANS_20: #41a9c933;
+    CHART_COLOR_5_TRANS_20: #4258c933;
+    CHART_COLOR_6_TRANS_20: #9a42c833;
+    CHART_COLOR_7_TRANS_20: #c8416433;
+    CHART_COLOR_8_TRANS_20: #88888833;
+    /* 70% opacity */
+    CHART_COLOR_1_TRANS_70: #f3622db3;
+    CHART_COLOR_2_TRANS_70: #fba71bb3;
+    CHART_COLOR_3_TRANS_70: #57b757b3;
+    CHART_COLOR_4_TRANS_70: #41a9c9b3;
+    CHART_COLOR_5_TRANS_70: #4258c9b3;
+    CHART_COLOR_6_TRANS_70: #9a42c8b3;
+    CHART_COLOR_7_TRANS_70: #c84164b3;
+    CHART_COLOR_8_TRANS_70: #888888b3;
 }
 
+.chart-area-symbol {
+    -fx-background-color: CHART_COLOR_1, white;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 0px;
+    -fx-padding: 0px;
+}
+
+.default-color0.chart-area-symbol {
+    -fx-background-color: CHART_COLOR_1, white;
+}
+
+.default-color1.chart-area-symbol {
+    -fx-background-color: CHART_COLOR_2, white;
+}
+
+.default-color2.chart-area-symbol {
+    -fx-background-color: CHART_COLOR_3, white;
+}
+
+.default-color3.chart-area-symbol {
+    -fx-background-color: CHART_COLOR_4, white;
+}
+
+.default-color4.chart-area-symbol {
+    -fx-background-color: CHART_COLOR_5, white;
+}
+
+.default-color5.chart-area-symbol {
+    -fx-background-color: CHART_COLOR_6, white;
+}
+
+.default-color6.chart-area-symbol {
+    -fx-background-color: CHART_COLOR_7, white;
+}
+
+.default-color7.chart-area-symbol {
+    -fx-background-color: CHART_COLOR_8, white;
+}
+
+.chart-series-area-line {
+    -fx-stroke: CHART_COLOR_1;
+    -fx-stroke-width: 1px;
+}
+
+.default-color0.chart-series-area-line {
+    -fx-stroke: CHART_COLOR_1;
+}
+
+.default-color1.chart-series-area-line {
+    -fx-stroke: CHART_COLOR_2;
+}
+
+.default-color2.chart-series-area-line {
+    -fx-stroke: CHART_COLOR_3;
+}
+
+.default-color3.chart-series-area-line {
+    -fx-stroke: CHART_COLOR_4;
+}
+
+.default-color4.chart-series-area-line {
+    -fx-stroke: CHART_COLOR_5;
+}
+
+.default-color5.chart-series-area-line {
+    -fx-stroke: CHART_COLOR_6;
+}
+
+.default-color6.chart-series-area-line {
+    -fx-stroke: CHART_COLOR_7;
+}
+
+.default-color7.chart-series-area-line {
+    -fx-stroke: CHART_COLOR_8;
+}
+
+.chart-series-area-fill {
+    -fx-stroke: null;
+    -fx-fill: CHART_COLOR_1_TRANS_20;
+}
+
+.default-color0.chart-series-area-fill {
+    -fx-fill: CHART_COLOR_1_TRANS_20;
+}
+
+.default-color1.chart-series-area-fill {
+    -fx-fill: CHART_COLOR_2_TRANS_20;
+}
+
+.default-color2.chart-series-area-fill {
+    -fx-fill: CHART_COLOR_3_TRANS_20;
+}
+
+.default-color3.chart-series-area-fill {
+    -fx-fill: CHART_COLOR_4_TRANS_20;
+}
+
+.default-color4.chart-series-area-fill {
+    -fx-fill: CHART_COLOR_5_TRANS_20;
+}
+
+.default-color5.chart-series-area-fill {
+    -fx-fill: CHART_COLOR_6_TRANS_20;
+}
+
+.default-color6.chart-series-area-fill {
+    -fx-fill: CHART_COLOR_7_TRANS_20;
+}
+
+.default-color7.chart-series-area-fill {
+    -fx-fill: CHART_COLOR_8_TRANS_20;
+}
+
+.area-legend-symbol {
+    -fx-padding: 6px;
+    -fx-background-radius: 6px; /* makes sure this remains circular */
+    -fx-background-insets: 0, 3;
+}
