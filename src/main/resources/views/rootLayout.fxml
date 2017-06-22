@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0"
+            prefWidth="700.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.121"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ui.controllers.HomeController">
+    <left>
+        <VBox prefHeight="617.0" prefWidth="149.0" spacing="8.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="openBtn" mnemonicParsing="false" onAction="#handleOpenFile" text="Open file"/>
+                <Separator prefWidth="200.0"/>
+                <Label fx:id="networkName"/>
+                <Label fx:id="nodesCount"/>
+                <Label fx:id="pipesCount"/>
+                <Label fx:id="pumpsCount"/>
+                <Label fx:id="tanksCount"/>
+                <Separator prefWidth="200.0"/>
+                <Button fx:id="optimizeBtn" disable="true" mnemonicParsing="false" onAction="#handleOptimizeNetwork"
+                        text="Optimize"/>
+                <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="69.0" minWidth="10.0" prefWidth="50.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="101.0" minWidth="10.0" prefWidth="92.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <Label text="Runs"/>
+                        <Label text="Label" GridPane.rowIndex="1"/>
+                        <Label text="Label" GridPane.rowIndex="2"/>
+                        <TextField text="100" GridPane.columnIndex="1"/>
+                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                    </children>
+                </GridPane>
+            </children>
+            <BorderPane.margin>
+                <Insets left="8.0" top="8.0"/>
+            </BorderPane.margin>
+        </VBox>
+    </left>
+    <bottom>
+        <HBox prefHeight="50.0" prefWidth="600.0" spacing="8.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Total solutions:"/>
+                <Label fx:id="solutionsCount" text="0"/>
+                <Label text="Invalid solutions:"/>
+                <Label fx:id="invalidSolutionsCount" text="0"/>
+                <ProgressBar fx:id="progressBar" prefWidth="200.0" progress="0.0"/>
+            </children>
+            <padding>
+                <Insets left="8.0" top="8.0"/>
+            </padding>
+        </HBox>
+    </bottom>
+    <center>
+        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <children>
+                <AreaChart fx:id="energyChart" animated="false" styleClass="energy" title="Consumed Energy">
+                    <xAxis>
+                        <NumberAxis side="BOTTOM" styleClass="energy"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis side="LEFT"/>
+                    </yAxis>
+                </AreaChart>
+                <AreaChart fx:id="pressureChart" animated="false" title="Pressure">
+                    <xAxis>
+                        <NumberAxis side="BOTTOM"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis side="LEFT"/>
+                    </yAxis>
+                </AreaChart>
+                <AreaChart fx:id="tanksChart" animated="false" title="Tanks Volume">
+                    <xAxis>
+                        <NumberAxis side="BOTTOM"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis side="LEFT"/>
+                    </yAxis>
+                </AreaChart>
+                <AreaChart fx:id="fragmentsChart" animated="false" title="Fragments">
+                    <xAxis>
+                        <NumberAxis side="BOTTOM"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis side="LEFT"/>
+                    </yAxis>
+                </AreaChart>
+            </children>
+            <BorderPane.margin>
+                <Insets top="8.0"/>
+            </BorderPane.margin>
+        </VBox>
+    </center>
+</BorderPane>
