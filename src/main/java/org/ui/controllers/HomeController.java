@@ -85,8 +85,6 @@ public class HomeController implements OptimizationListener {
             OpenNetworkFile openNetwork = new OpenNetworkFile(file);
             network = openNetwork.get();
             networkInfo.update(openNetwork);
-            evaluationProgress.reset(100);
-            optimizationCharts.reset();
             optimizeBtn.setDisable(false);
         } catch (ParseException e) {
             Utils.showError(stage, "Invalid file");
@@ -96,7 +94,9 @@ public class HomeController implements OptimizationListener {
     @FXML
     private void handleOptimizeNetwork() {
         int runs = Integer.parseInt(runsField.getText());
-        String algorithm = algorithmMenu.getSelectionModel().getSelectedItem();
+        String algorithm = algorithmMenu.getValue();
+        evaluationProgress.reset(runs);
+        optimizationCharts.reset();
         Executors.newSingleThreadExecutor().execute(() -> new OptimizationBuilder(network, this)
                 .setAlgorithm(algorithm)
                 .setMaxEvaluations(runs)
