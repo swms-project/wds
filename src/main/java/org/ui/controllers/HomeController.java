@@ -13,17 +13,19 @@ import org.swms.optimization.Optimization;
 import org.swms.optimization.OptimizationBuilder;
 import org.swms.optimization.OptimizationListener;
 import org.swms.optimization.SimulationNetwork;
+import org.ui.MainApp;
 import org.ui.controllers.states.EvaluationProgress;
 import org.ui.controllers.states.NetworkInfo;
 import org.ui.controllers.states.OptimizationCharts;
 import org.ui.utils.Utils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 
 public class HomeController implements OptimizationListener {
-    private Stage stage;
+    private MainApp app;
     private Network network;
     private NetworkInfo networkInfo;
     private EvaluationProgress evaluationProgress;
@@ -39,7 +41,6 @@ public class HomeController implements OptimizationListener {
     private Label pumpsCount;
     @FXML
     private Label tanksCount;
-
     @FXML
     private ProgressBar progressBar;
     @FXML
@@ -55,16 +56,17 @@ public class HomeController implements OptimizationListener {
     private AreaChart<Integer, Double> tanksChart;
     @FXML
     private AreaChart<Integer, Integer> fragmentsChart;
-
     @FXML
+
     private TextField runsField;
     @FXML
     private ChoiceBox<String> algorithmMenu;
-
     @FXML
     private Button optimizeBtn;
     @FXML
     private Button openBtn;
+    @FXML
+    private Button exploreBtn;
 
     @FXML
     private void initialize() {
@@ -74,20 +76,25 @@ public class HomeController implements OptimizationListener {
         algorithmMenu.getItems().addAll(Optimization.ALGORITHMS);
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
+    public void setApp(MainApp app) {
+        this.app = app;
+    }
+
+    public Stage getStage() {
+        return app.getPrimaryStage();
     }
 
     @FXML
     private void handleOpenFile() {
-        File file = Utils.inpFileChooser().showOpenDialog(stage);
+        File file = Utils.inpFileChooser().showOpenDialog(getStage());
         try {
             OpenNetworkFile openNetwork = new OpenNetworkFile(file);
             network = openNetwork.get();
             networkInfo.update(openNetwork);
             optimizeBtn.setDisable(false);
+            exploreBtn.setDisable(true);
         } catch (ParseException e) {
-            Utils.showError(stage, "Invalid file");
+            Utils.showError(getStage(), "Invalid file");
         }
     }
 
@@ -104,14 +111,26 @@ public class HomeController implements OptimizationListener {
                 .run());
         openBtn.setDisable(true);
         optimizeBtn.setDisable(true);
+        exploreBtn.setDisable(true);
+    }
+
+    @FXML
+    private void handleExploreSolutions() {
+        try {
+            app.showSolutionsWindow(new ArrayList<>());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Utils.showError(getStage(), "Something went wrong! Can't open solutions explorer.");
+        }
     }
 
     @Override
     public void done(List<Solution> solutions) {
         Platform.runLater(() -> {
-            Utils.showInfo(this.stage, "Done", "Optimization finished successfully");
+            Utils.showInfo(getStage(), "Done", "Optimization finished successfully");
             openBtn.setDisable(false);
             optimizeBtn.setDisable(false);
+            exploreBtn.setDisable(false);
         });
     }
 

@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0"
-            prefWidth="700.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.121"
+            prefWidth="700.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.102"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ui.controllers.HomeController">
     <left>
         <VBox prefHeight="617.0" prefWidth="149.0" spacing="8.0" BorderPane.alignment="CENTER">
@@ -36,10 +36,12 @@
                         <Label text="Label" GridPane.rowIndex="2"/>
                         <TextField fx:id="runsField" text="100" GridPane.columnIndex="1"/>
                         <TextField GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                        <ChoiceBox fx:id="algorithmMenu" value="NSGAII" prefWidth="150.0" GridPane.columnIndex="1"
+                        <ChoiceBox fx:id="algorithmMenu" prefWidth="150.0" value="NSGAII" GridPane.columnIndex="1"
                                    GridPane.rowIndex="1"/>
                     </children>
                 </GridPane>
+                <Separator prefWidth="200.0"/>
+                <Button fx:id="exploreBtn" disable="true" mnemonicParsing="false" text="Explore solutions" onAction="#handleExploreSolutions"/>
             </children>
             <BorderPane.margin>
                 <Insets left="8.0" top="8.0"/>
