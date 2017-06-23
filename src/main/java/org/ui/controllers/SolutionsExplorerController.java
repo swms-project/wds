@@ -2,17 +2,21 @@ package org.ui.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import org.ui.MainApp;
+import javafx.scene.layout.VBox;
+import javafx.util.StringConverter;
 import org.ui.models.SolutionModel;
 
 import java.util.List;
+import java.util.Map;
 
 public class SolutionsExplorerController {
-    private MainApp app;
-
     @FXML
     private TableView<SolutionModel> solutionsTable;
     @FXML
@@ -28,15 +32,64 @@ public class SolutionsExplorerController {
     private Label solutionsCount;
 
     @FXML
+    private VBox solutionView;
+    @FXML
+    private ScrollPane pane;
+
+    @FXML
     private void initialize() {
+        solutionsTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> show(newValue));
         energyColumn.setCellValueFactory(param -> param.getValue().consumedEnergyProperty().asObject());
         pressureColumn.setCellValueFactory(param -> param.getValue().pressureProperty().asObject());
         tanksColumn.setCellValueFactory(param -> param.getValue().tanksVolumeProperty().asObject());
         fragmentsColumn.setCellValueFactory(param -> param.getValue().fragmentsProperty().asObject());
+        solutionView.prefWidthProperty().bind(pane.widthProperty());
     }
 
-    public void setApp(MainApp app) {
-        this.app = app;
+    private void show(SolutionModel solution) {
+        solutionView.getChildren().clear();
+        int i = 0;
+        for (Map.Entry<String, boolean[]> e : solution.getPumpingSchedule().entrySet())
+            solutionView.getChildren().add(pumpChart(e.getKey(), e.getValue(), i++));
+    }
+
+    private AreaChart<Number, Number> pumpChart(String pump, boolean[] schedule, int index) {
+        AreaChart<Number, Number> chart = getAreaChart(schedule.length + 1);
+        chart.setTitle(pump);
+        for (int i = 0; i < index; i++)
+            chart.getData().add(new XYChart.Series<>());
+
+        chart.getData().add(pumpSeries(schedule));
+        return chart;
+    }
+
+    private AreaChart<Number, Number> getAreaChart(int xLength) {
+        NumberAxis xAxis = new NumberAxis(0, xLength, 1);
+        NumberAxis yAxis = new NumberAxis(0, 1, 0);
+        StringConverter<Number> formatter = new StringConverter<Number>() {
+            @Override
+            public String toString(Number number) {
+                int hour = number.intValue();
+                return (hour % 12 == 0 ? 12 : hour % 12) + ((hour / 12) % 2 == 0 ? " AM" : " PM");
+            }
+
+            @Override
+            public Number fromString(String string) {
+                return null;
+            }
+        };
+        xAxis.setTickLabelFormatter(formatter);
+        return new AreaChart<>(xAxis, yAxis);
+    }
+
+    private XYChart.Series<Number, Number> pumpSeries(boolean[] schedule) {
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        for (int i = 0; i < schedule.length; i++) {
+            series.getData().add(new XYChart.Data<>(i, schedule[i] ? 1 : 0));
+            series.getData().add(new XYChart.Data<>(i + 1, schedule[i] ? 1 : 0));
+        }
+        return series;
     }
 
     public void setSolutions(List<SolutionModel> solutions) {

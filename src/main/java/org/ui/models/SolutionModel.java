@@ -31,7 +31,7 @@ public class SolutionModel {
         this.network = initNetwork(network, solution);
     }
 
-    public Network initNetwork(Network network, Solution solution) {
+    private Network initNetwork(Network network, Solution solution) {
         ArrayList<Pump> pumps = new ArrayList<>(network.getPumps());
         List<boolean[]> schedule = new ArrayList<>();
         for (int i = 0; i < solution.getNumberOfVariables(); i++) {

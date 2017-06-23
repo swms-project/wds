@@ -43,7 +43,6 @@ public class MainApp extends Application {
         Parent root = loader.load();
 
         SolutionsExplorerController controller = loader.getController();
-        controller.setApp(this);
         controller.setSolutions(solutions);
 
         Stage stage = new Stage();

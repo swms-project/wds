@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -32,6 +31,10 @@
         </TableView>
     </left>
     <center>
-        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER"/>
+        <ScrollPane fx:id="pane" BorderPane.alignment="CENTER">
+            <content>
+                <VBox fx:id="solutionView" prefHeight="200.0" prefWidth="200.0"/>
+            </content>
+        </ScrollPane>
     </center>
 </BorderPane>
