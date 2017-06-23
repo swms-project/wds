@@ -44,6 +44,7 @@ public class MainApp extends Application {
 
         SolutionsExplorerController controller = loader.getController();
         controller.setApp(this);
+        controller.setSolutions(solutions);
 
         Stage stage = new Stage();
         stage.initOwner(primaryStage);

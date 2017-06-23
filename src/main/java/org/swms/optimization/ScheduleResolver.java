@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScheduleResolver {
-    Network scheduledNetwork(Network network, List<boolean[]> schedule) {
+    public Network scheduledNetwork(Network network, List<boolean[]> schedule) {
         Network net = copyNetwork(network);
         List<Pump> pumps = new ArrayList<>(net.getPumps());
 

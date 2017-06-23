@@ -17,12 +17,14 @@ import org.ui.MainApp;
 import org.ui.controllers.states.EvaluationProgress;
 import org.ui.controllers.states.NetworkInfo;
 import org.ui.controllers.states.OptimizationCharts;
+import org.ui.models.SolutionModel;
 import org.ui.utils.Utils;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
+
+import static java.util.stream.Collectors.toList;
 
 public class HomeController implements OptimizationListener {
     private MainApp app;
@@ -67,6 +69,7 @@ public class HomeController implements OptimizationListener {
     private Button openBtn;
     @FXML
     private Button exploreBtn;
+    private List<SolutionModel> solutions;
 
     @FXML
     private void initialize() {
@@ -117,7 +120,7 @@ public class HomeController implements OptimizationListener {
     @FXML
     private void handleExploreSolutions() {
         try {
-            app.showSolutionsWindow(new ArrayList<>());
+            app.showSolutionsWindow(solutions);
         } catch (Exception e) {
             e.printStackTrace();
             Utils.showError(getStage(), "Something went wrong! Can't open solutions explorer.");
@@ -128,6 +131,9 @@ public class HomeController implements OptimizationListener {
     public void done(List<Solution> solutions) {
         Platform.runLater(() -> {
             Utils.showInfo(getStage(), "Done", "Optimization finished successfully");
+            this.solutions = solutions.stream()
+                    .map(sol -> new SolutionModel(network, sol))
+                    .collect(toList());
             openBtn.setDisable(false);
             optimizeBtn.setDisable(false);
             exploreBtn.setDisable(false);

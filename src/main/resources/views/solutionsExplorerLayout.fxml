@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<?import javafx.scene.layout.BorderPane?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.102"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ui.controllers.SolutionsExplorerController"/>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0"
+            prefWidth="960.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.102"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ui.controllers.SolutionsExplorerController">
+    <top>
+        <HBox prefHeight="25.0" prefWidth="952.0" spacing="8.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="solutionsCount" text="0"/>
+                <Label text="solutions"/>
+            </children>
+            <BorderPane.margin>
+                <Insets left="8.0" top="8.0"/>
+            </BorderPane.margin>
+        </HBox>
+    </top>
+    <left>
+        <TableView fx:id="solutionsTable" prefHeight="700.0" prefWidth="259.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="energyColumn" prefWidth="75.0" text="Energy"/>
+                <TableColumn fx:id="pressureColumn" prefWidth="75.0" text="Pressure"/>
+                <TableColumn fx:id="tanksColumn" prefWidth="75.0" text="Volume"/>
+                <TableColumn fx:id="fragmentsColumn" prefWidth="75.0" text="Fragments"/>
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+        </TableView>
+    </left>
+    <center>
+        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER"/>
+    </center>
+</BorderPane>
