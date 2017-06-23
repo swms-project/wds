@@ -41,11 +41,12 @@ public class MainApp extends Application {
     public void showSolutionsWindow(List<SolutionModel> solutions) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/solutionsExplorerLayout.fxml"));
         Parent root = loader.load();
+        Stage stage = new Stage();
 
         SolutionsExplorerController controller = loader.getController();
         controller.setSolutions(solutions);
+        controller.setStage(stage);
 
-        Stage stage = new Stage();
         stage.initOwner(primaryStage);
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setTitle("Solutions Explorer");

@@ -10,13 +10,20 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import org.operations.SaveNetwork;
 import org.ui.models.SolutionModel;
+import org.ui.utils.Utils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 public class SolutionsExplorerController {
+    private Stage stage;
+
     @FXML
     private TableView<SolutionModel> solutionsTable;
     @FXML
@@ -92,8 +99,27 @@ public class SolutionsExplorerController {
         return series;
     }
 
+    @FXML
+    private void handleSaveNetwork() {
+        SolutionModel solution = solutionsTable.getSelectionModel().getSelectedItem();
+        if (solution != null) {
+            File file = Utils.inpFileChooser().showSaveDialog(stage);
+            try {
+                SaveNetwork.save(solution.getNetwork(), file);
+            } catch (IOException e) {
+                Utils.showError(stage, "Something went wrong! Can't save the file");
+            }
+        } else {
+            Utils.showError(stage, "Select a solution");
+        }
+    }
+
     public void setSolutions(List<SolutionModel> solutions) {
         solutionsTable.setItems(FXCollections.observableArrayList(solutions));
         solutionsCount.setText(String.valueOf(solutions.size()));
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }
