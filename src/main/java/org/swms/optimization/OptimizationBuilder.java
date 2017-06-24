@@ -7,6 +7,9 @@ public class OptimizationBuilder {
     private OptimizationListener listener;
     private String algorithm = "NSGAII";
     private int maxEvaluations = 100;
+    private int populationSize = 20;
+    private double bitFlipRate = 0.2;
+    private double crossoverRate = 0.8;
 
     public OptimizationBuilder(Network network, OptimizationListener listener) {
         this.network = network;
@@ -23,7 +26,22 @@ public class OptimizationBuilder {
         return this;
     }
 
+    public OptimizationBuilder setPopulationSize(int populationSize) {
+        this.populationSize = populationSize;
+        return this;
+    }
+
+    public OptimizationBuilder setBitFlipRate(double bitFlipRate) {
+        this.bitFlipRate = bitFlipRate;
+        return this;
+    }
+
+    public OptimizationBuilder setCrossoverRate(double crossoverRate) {
+        this.crossoverRate = crossoverRate;
+        return this;
+    }
+
     public Optimization create() {
-        return new Optimization(network, listener, algorithm, maxEvaluations);
+        return new Optimization(network, listener, algorithm, maxEvaluations, populationSize, bitFlipRate, crossoverRate);
     }
 }

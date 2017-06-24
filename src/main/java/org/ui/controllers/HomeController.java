@@ -58,11 +58,18 @@ public class HomeController implements OptimizationListener {
     private AreaChart<Integer, Double> tanksChart;
     @FXML
     private AreaChart<Integer, Integer> fragmentsChart;
-    @FXML
 
-    private TextField runsField;
     @FXML
     private ChoiceBox<String> algorithmMenu;
+    @FXML
+    private TextField runsField;
+    @FXML
+    private TextField populationSizeField;
+    @FXML
+    private TextField bitFlipRateField;
+    @FXML
+    private TextField crossoverRateField;
+
     @FXML
     private Button optimizeBtn;
     @FXML
@@ -105,11 +112,17 @@ public class HomeController implements OptimizationListener {
     private void handleOptimizeNetwork() {
         int runs = Integer.parseInt(runsField.getText());
         String algorithm = algorithmMenu.getValue();
+        int population = Integer.parseInt(populationSizeField.getText());
+        double bitFlip = Double.parseDouble(bitFlipRateField.getText());
+        double crossover = Double.parseDouble(crossoverRateField.getText());
         evaluationProgress.reset(runs);
         optimizationCharts.reset();
         Executors.newSingleThreadExecutor().execute(() -> new OptimizationBuilder(network, this)
                 .setAlgorithm(algorithm)
                 .setMaxEvaluations(runs)
+                .setPopulationSize(population)
+                .setBitFlipRate(bitFlip)
+                .setCrossoverRate(crossover)
                 .create()
                 .run());
         openBtn.setDisable(true);
