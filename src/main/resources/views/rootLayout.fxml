@@ -31,19 +31,26 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
                         <Label text="Runs"/>
-                        <Label text="Algorithm" GridPane.rowIndex="1"/>
-                        <Label text="Population" GridPane.rowIndex="2"/>
-                        <Label text="Bit flip" GridPane.rowIndex="3"/>
-                        <Label text="Cross over" GridPane.rowIndex="4"/>
+                        <Label text="Threads" GridPane.rowIndex="1"/>
+                        <Label text="Algorithm" GridPane.rowIndex="2"/>
+                        <Label text="Population" GridPane.rowIndex="3"/>
+                        <Label text="Bit flip" GridPane.rowIndex="4"/>
+                        <Label text="Cross over" GridPane.rowIndex="5"/>
                         <TextField fx:id="runsField" text="100" GridPane.columnIndex="1"/>
+                        <Slider fx:id="threadsSlider" blockIncrement="1" majorTickUnit="1" min="1" minorTickCount="1"
+                                showTickLabels="true" snapToTicks="true" value="4" GridPane.columnIndex="1"
+                                GridPane.rowIndex="1"/>
                         <ChoiceBox fx:id="algorithmMenu" prefWidth="150.0" value="NSGAII" GridPane.columnIndex="1"
-                                   GridPane.rowIndex="1"/>
-                        <TextField fx:id="populationSizeField" text="20" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                        <TextField fx:id="bitFlipRateField" text="0.2" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                        <TextField fx:id="crossoverRateField" text="0.8" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                                   GridPane.rowIndex="2"/>
+                        <TextField fx:id="populationSizeField" text="20" GridPane.columnIndex="1"
+                                   GridPane.rowIndex="3"/>
+                        <TextField fx:id="bitFlipRateField" text="0.2" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                        <TextField fx:id="crossoverRateField" text="0.8" GridPane.columnIndex="1"
+                                   GridPane.rowIndex="5"/>
                     </children>
                 </GridPane>
                 <Separator prefWidth="200.0"/>

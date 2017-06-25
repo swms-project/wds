@@ -19,8 +19,9 @@ public class Optimization {
     private final int populationSize;
     private final double bitFlipRate;
     private final double crossoverRate;
+    private final int threads;
 
-    public Optimization(Network network, OptimizationListener listener, String algorithm, int maxEvaluations, int populationSize, double bitFlipRate, double crossoverRate) {
+    public Optimization(Network network, OptimizationListener listener, String algorithm, int maxEvaluations, int populationSize, double bitFlipRate, double crossoverRate, int threads) {
         this.network = network;
         this.listener = listener;
         this.algorithm = algorithm;
@@ -28,6 +29,7 @@ public class Optimization {
         this.populationSize = populationSize;
         this.bitFlipRate = bitFlipRate;
         this.crossoverRate = crossoverRate;
+        this.threads = threads;
     }
 
     public void run() {
@@ -39,7 +41,7 @@ public class Optimization {
                 .withProperty("bf.rate", bitFlipRate)
                 .withProperty("1x.rate", crossoverRate)
                 .withMaxEvaluations(maxEvaluations)
-                .distributeOnAllCores()
+                .distributeOn(threads)
                 .run();
         result.forEach(solutions::add);
         listener.done(solutions);

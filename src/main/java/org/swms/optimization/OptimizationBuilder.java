@@ -10,6 +10,7 @@ public class OptimizationBuilder {
     private int populationSize = 20;
     private double bitFlipRate = 0.2;
     private double crossoverRate = 0.8;
+    private int threads = 1;
 
     public OptimizationBuilder(Network network, OptimizationListener listener) {
         this.network = network;
@@ -41,7 +42,12 @@ public class OptimizationBuilder {
         return this;
     }
 
+    public OptimizationBuilder setThreads(int threads) {
+        this.threads = threads;
+        return this;
+    }
+
     public Optimization create() {
-        return new Optimization(network, listener, algorithm, maxEvaluations, populationSize, bitFlipRate, crossoverRate);
+        return new Optimization(network, listener, algorithm, maxEvaluations, populationSize, bitFlipRate, crossoverRate, threads);
     }
 }

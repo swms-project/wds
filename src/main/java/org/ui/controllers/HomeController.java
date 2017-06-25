@@ -64,6 +64,8 @@ public class HomeController implements OptimizationListener {
     @FXML
     private TextField runsField;
     @FXML
+    public Slider threadsSlider;
+    @FXML
     private TextField populationSizeField;
     @FXML
     private TextField bitFlipRateField;
@@ -84,6 +86,8 @@ public class HomeController implements OptimizationListener {
         evaluationProgress = new EvaluationProgress(progressBar, solutionsCount, invalidSolutionsCount);
         optimizationCharts = new OptimizationCharts(energyChart, pressureChart, tanksChart, fragmentsChart);
         algorithmMenu.getItems().addAll(Optimization.ALGORITHMS);
+        threadsSlider.setMax(Runtime.getRuntime().availableProcessors());
+        threadsSlider.valueProperty().addListener((observable, oldValue, newValue) -> threadsSlider.setValue(newValue.intValue()));
     }
 
     public void setApp(MainApp app) {
@@ -115,6 +119,7 @@ public class HomeController implements OptimizationListener {
         int population = Integer.parseInt(populationSizeField.getText());
         double bitFlip = Double.parseDouble(bitFlipRateField.getText());
         double crossover = Double.parseDouble(crossoverRateField.getText());
+        int threads = (int) threadsSlider.getValue();
         evaluationProgress.reset(runs);
         optimizationCharts.reset();
         Executors.newSingleThreadExecutor().execute(() -> new OptimizationBuilder(network, this)
@@ -123,6 +128,7 @@ public class HomeController implements OptimizationListener {
                 .setPopulationSize(population)
                 .setBitFlipRate(bitFlip)
                 .setCrossoverRate(crossover)
+                .setThreads(threads)
                 .create()
                 .run());
         openBtn.setDisable(true);
