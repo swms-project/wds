@@ -9,12 +9,12 @@ import org.addition.epanet.network.Network;
 import org.moeaframework.core.Solution;
 import org.operations.OpenNetworkFile;
 import org.operations.exceptions.ParseException;
-import org.swms.optimization.Optimization;
 import org.swms.optimization.OptimizationBuilder;
 import org.swms.optimization.OptimizationListener;
 import org.swms.optimization.SimulationNetwork;
 import org.ui.MainApp;
 import org.ui.controllers.states.EvaluationProgress;
+import org.ui.controllers.states.HomeInput;
 import org.ui.controllers.states.NetworkInfo;
 import org.ui.controllers.states.OptimizationCharts;
 import org.ui.models.SolutionModel;
@@ -32,6 +32,7 @@ public class HomeController implements OptimizationListener {
     private NetworkInfo networkInfo;
     private EvaluationProgress evaluationProgress;
     private OptimizationCharts optimizationCharts;
+    private HomeInput input;
 
     @FXML
     private Label networkName;
@@ -85,9 +86,7 @@ public class HomeController implements OptimizationListener {
         networkInfo = new NetworkInfo(networkName, nodesCount, pipesCount, pumpsCount, tanksCount);
         evaluationProgress = new EvaluationProgress(progressBar, solutionsCount, invalidSolutionsCount);
         optimizationCharts = new OptimizationCharts(energyChart, pressureChart, tanksChart, fragmentsChart);
-        algorithmMenu.getItems().addAll(Optimization.ALGORITHMS);
-        threadsSlider.setMax(Runtime.getRuntime().availableProcessors());
-        threadsSlider.valueProperty().addListener((observable, oldValue, newValue) -> threadsSlider.setValue(newValue.intValue()));
+        input = new HomeInput(algorithmMenu, runsField, threadsSlider, populationSizeField, bitFlipRateField, crossoverRateField);
     }
 
     public void setApp(MainApp app) {
@@ -114,21 +113,15 @@ public class HomeController implements OptimizationListener {
 
     @FXML
     private void handleOptimizeNetwork() {
-        int runs = Integer.parseInt(runsField.getText());
-        String algorithm = algorithmMenu.getValue();
-        int population = Integer.parseInt(populationSizeField.getText());
-        double bitFlip = Double.parseDouble(bitFlipRateField.getText());
-        double crossover = Double.parseDouble(crossoverRateField.getText());
-        int threads = (int) threadsSlider.getValue();
-        evaluationProgress.reset(runs);
+        evaluationProgress.reset(input.runs());
         optimizationCharts.reset();
         Executors.newSingleThreadExecutor().execute(() -> new OptimizationBuilder(network, this)
-                .setAlgorithm(algorithm)
-                .setMaxEvaluations(runs)
-                .setPopulationSize(population)
-                .setBitFlipRate(bitFlip)
-                .setCrossoverRate(crossover)
-                .setThreads(threads)
+                .setAlgorithm(input.algorithm())
+                .setMaxEvaluations(input.runs())
+                .setPopulationSize(input.population())
+                .setBitFlipRate(input.bitFlip())
+                .setCrossoverRate(input.crossover())
+                .setThreads(input.threads())
                 .create()
                 .run());
         openBtn.setDisable(true);
