@@ -121,7 +121,7 @@ public class HomeController implements OptimizationListener {
     @FXML
     private void handleOptimizeNetwork() {
         evaluationProgress.reset(input.runs());
-        optimizationCharts.reset();
+        optimizationCharts.reset(input.runs());
         Executors.newSingleThreadExecutor().execute(() -> new OptimizationBuilder(network, this)
                 .setAlgorithm(input.algorithm())
                 .setMaxEvaluations(input.runs())

@@ -1,9 +1,12 @@
 package org.ui.controllers.states;
 
 import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import org.swms.optimization.SimulationNetwork;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class OptimizationCharts {
@@ -12,8 +15,10 @@ public class OptimizationCharts {
     private final XYChart.Series<Integer, Double> pressureSeries = new XYChart.Series<>();
     private final XYChart.Series<Integer, Double> tanksSeries = new XYChart.Series<>();
     private final XYChart.Series<Integer, Integer> fragmentsSeries = new XYChart.Series<>();
+    private final ArrayList<AreaChart> charts = new ArrayList<>();
 
     public OptimizationCharts(AreaChart<Integer, Double> energyChart, AreaChart<Integer, Double> pressureChart, AreaChart<Integer, Double> tanksChart, AreaChart<Integer, Integer> fragmentsChart) {
+        addCharts(energyChart, pressureChart, tanksChart, fragmentsChart);
         addSeries(energyChart, energySeries, 3);
         addSeries(pressureChart, pressureSeries, 1);
         addSeries(tanksChart, tanksSeries, 2);
@@ -25,6 +30,10 @@ public class OptimizationCharts {
             chart.getData().add(new XYChart.Series<>());
         }
         chart.getData().add(series);
+    }
+
+    private void addCharts(AreaChart... args) {
+        Collections.addAll(charts, args);
     }
 
     public void update(SimulationNetwork solution) {
@@ -41,11 +50,12 @@ public class OptimizationCharts {
         series.getData().add(new XYChart.Data<>(x, value));
     }
 
-    public void reset() {
+    public void reset(int runs) {
         solutionsCount.set(0);
         energySeries.getData().clear();
         pressureSeries.getData().clear();
         tanksSeries.getData().clear();
         fragmentsSeries.getData().clear();
+        charts.forEach(c -> ((NumberAxis) c.getXAxis()).setUpperBound(runs));
     }
 }

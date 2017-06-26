@@ -91,9 +91,9 @@
     <center>
         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
-                <AreaChart fx:id="energyChart" animated="false" styleClass="energy" title="Consumed Energy">
+                <AreaChart fx:id="energyChart" animated="false" title="Consumed Energy">
                     <xAxis>
-                        <NumberAxis side="BOTTOM" styleClass="energy"/>
+                        <NumberAxis side="BOTTOM" autoRanging="false"/>
                     </xAxis>
                     <yAxis>
                         <NumberAxis side="LEFT"/>
@@ -101,7 +101,7 @@
                 </AreaChart>
                 <AreaChart fx:id="pressureChart" animated="false" title="Pressure">
                     <xAxis>
-                        <NumberAxis side="BOTTOM"/>
+                        <NumberAxis side="BOTTOM" autoRanging="false"/>
                     </xAxis>
                     <yAxis>
                         <NumberAxis side="LEFT"/>
@@ -109,7 +109,7 @@
                 </AreaChart>
                 <AreaChart fx:id="tanksChart" animated="false" title="Tanks Volume">
                     <xAxis>
-                        <NumberAxis side="BOTTOM"/>
+                        <NumberAxis side="BOTTOM" autoRanging="false"/>
                     </xAxis>
                     <yAxis>
                         <NumberAxis side="LEFT"/>
@@ -117,7 +117,7 @@
                 </AreaChart>
                 <AreaChart fx:id="fragmentsChart" animated="false" title="Fragments">
                     <xAxis>
-                        <NumberAxis side="BOTTOM"/>
+                        <NumberAxis side="BOTTOM" autoRanging="false"/>
                     </xAxis>
                     <yAxis>
                         <NumberAxis side="LEFT"/>
