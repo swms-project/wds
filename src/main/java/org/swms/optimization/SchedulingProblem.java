@@ -11,11 +11,13 @@ import java.util.List;
 
 public class SchedulingProblem implements Problem {
     private final SimulationNetwork network;
+    private final Weights weights;
     private final OptimizationListener listener;
 
-    public SchedulingProblem(Network network, OptimizationListener listener) {
+    public SchedulingProblem(Network network, Weights weights, OptimizationListener listener) {
         super();
         this.network = new SimulationNetwork(network);
+        this.weights = weights;
         this.listener = listener;
     }
 
@@ -49,10 +51,10 @@ public class SchedulingProblem implements Problem {
     }
 
     private void setObjectives(SimulationNetwork network, Solution solution) {
-        solution.setObjective(0, network.consumedEnergy());
-        solution.setObjective(1, network.totalHead());
-        solution.setObjective(2, -network.tanks());
-        solution.setObjective(3, network.fragmentsCount());
+        solution.setObjective(0, weights.energy * network.consumedEnergy());
+        solution.setObjective(1, weights.head * network.totalHead());
+        solution.setObjective(2, weights.volume * -network.tanks());
+        solution.setObjective(3, weights.fragments * network.fragmentsCount());
     }
 
     private List<boolean[]> schedule(Solution solution) {

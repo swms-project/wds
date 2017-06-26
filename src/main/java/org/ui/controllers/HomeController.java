@@ -64,6 +64,14 @@ public class HomeController implements OptimizationListener {
     @FXML
     private TextField runsField;
     @FXML
+    private CheckBox energyCheck;
+    @FXML
+    private CheckBox pressureCheck;
+    @FXML
+    private CheckBox volumeCheck;
+    @FXML
+    private CheckBox fragmentsCheck;
+    @FXML
     public Slider threadsSlider;
     @FXML
     private TextField populationSizeField;
@@ -84,7 +92,8 @@ public class HomeController implements OptimizationListener {
         networkInfo = new NetworkInfo(networkName, nodesCount, pipesCount, pumpsCount, tanksCount);
         evaluationProgress = new EvaluationProgress(progressBar, solutionsCount, invalidSolutionsCount);
         optimizationCharts = new OptimizationCharts(energyChart, pressureChart, tanksChart, fragmentsChart);
-        input = new HomeInput(algorithmMenu, runsField, threadsSlider, populationSizeField, bitFlipRateField, crossoverRateField);
+        input = new HomeInput(algorithmMenu, runsField, threadsSlider, energyCheck, pressureCheck, volumeCheck,
+                fragmentsCheck, populationSizeField, bitFlipRateField, crossoverRateField);
         buttons = new HomeButtons(openBtn, optimizeBtn, exploreBtn);
     }
 
@@ -116,6 +125,10 @@ public class HomeController implements OptimizationListener {
         Executors.newSingleThreadExecutor().execute(() -> new OptimizationBuilder(network, this)
                 .setAlgorithm(input.algorithm())
                 .setMaxEvaluations(input.runs())
+                .setEnergy(input.energy())
+                .setHead(input.pressure())
+                .setVolume(input.volume())
+                .setFragments(input.fragments())
                 .setPopulationSize(input.population())
                 .setBitFlipRate(input.bitFlip())
                 .setCrossoverRate(input.crossover())

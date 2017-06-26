@@ -4,6 +4,7 @@ import org.addition.epanet.network.Network;
 
 public class OptimizationBuilder {
     private Network network;
+    private Weights weights = new Weights();
     private OptimizationListener listener;
     private String algorithm = "NSGAII";
     private int maxEvaluations = 100;
@@ -24,6 +25,26 @@ public class OptimizationBuilder {
 
     public OptimizationBuilder setMaxEvaluations(int maxEvaluations) {
         this.maxEvaluations = maxEvaluations;
+        return this;
+    }
+
+    public OptimizationBuilder setEnergy(boolean effective) {
+        weights = weights.setEnergy(effective ? 1 : 0);
+        return this;
+    }
+
+    public OptimizationBuilder setHead(boolean effective) {
+        weights = weights.setHead(effective ? 1 : 0);
+        return this;
+    }
+
+    public OptimizationBuilder setVolume(boolean effective) {
+        weights = weights.setVolume(effective ? 1 : 0);
+        return this;
+    }
+
+    public OptimizationBuilder setFragments(boolean effective) {
+        weights = weights.setFragments(effective ? 1 : 0);
         return this;
     }
 
@@ -48,6 +69,6 @@ public class OptimizationBuilder {
     }
 
     public Optimization create() {
-        return new Optimization(network, listener, algorithm, maxEvaluations, populationSize, bitFlipRate, crossoverRate, threads);
+        return new Optimization(network, weights, listener, algorithm, maxEvaluations, populationSize, bitFlipRate, crossoverRate, threads);
     }
 }

@@ -12,6 +12,7 @@ import java.util.List;
 public class Optimization {
     public static final List<String> ALGORITHMS = Arrays.asList("NSGAII", "eMOEA", "Random");
     private final Network network;
+    private final Weights weights;
     private final OptimizationListener listener;
     private List<Solution> solutions = new ArrayList<>();
     private final String algorithm;
@@ -21,8 +22,9 @@ public class Optimization {
     private final double crossoverRate;
     private final int threads;
 
-    public Optimization(Network network, OptimizationListener listener, String algorithm, int maxEvaluations, int populationSize, double bitFlipRate, double crossoverRate, int threads) {
+    public Optimization(Network network, Weights weights, OptimizationListener listener, String algorithm, int maxEvaluations, int populationSize, double bitFlipRate, double crossoverRate, int threads) {
         this.network = network;
+        this.weights = weights;
         this.listener = listener;
         this.algorithm = algorithm;
         this.maxEvaluations = maxEvaluations;
@@ -35,7 +37,7 @@ public class Optimization {
     public void run() {
         NondominatedPopulation result = new Executor()
                 .withProblemClass(SchedulingProblem.class
-                        , network, listener)
+                        , network, weights, listener)
                 .withAlgorithm(algorithm)
                 .withProperty("populationSize", populationSize)
                 .withProperty("bf.rate", bitFlipRate)
