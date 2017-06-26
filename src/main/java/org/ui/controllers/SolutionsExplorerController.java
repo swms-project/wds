@@ -64,6 +64,7 @@ public class SolutionsExplorerController {
     private AreaChart<Number, Number> pumpChart(String pump, boolean[] schedule, int index) {
         AreaChart<Number, Number> chart = getAreaChart(schedule.length + 1);
         chart.setTitle(pump);
+        chart.setCreateSymbols(false);
         for (int i = 0; i < index; i++)
             chart.getData().add(new XYChart.Series<>());
 

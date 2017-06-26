@@ -29,13 +29,6 @@
     CHART_COLOR_8_TRANS_70: #888888b3;
 }
 
-.chart-area-symbol {
-    -fx-background-color: CHART_COLOR_1, white;
-    -fx-background-insets: 0, 1;
-    -fx-background-radius: 0px;
-    -fx-padding: 0px;
-}
-
 .default-color0.chart-area-symbol {
     -fx-background-color: CHART_COLOR_1, white;
 }
