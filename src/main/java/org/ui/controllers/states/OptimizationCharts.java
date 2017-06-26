@@ -57,5 +57,17 @@ public class OptimizationCharts {
         tanksSeries.getData().clear();
         fragmentsSeries.getData().clear();
         charts.forEach(c -> ((NumberAxis) c.getXAxis()).setUpperBound(runs));
+        setDetailsVisible(runs < 1000);
+    }
+
+    private void setDetailsVisible(boolean visible) {
+        for (AreaChart chart : charts) {
+            NumberAxis xAxis = (NumberAxis) chart.getXAxis();
+            chart.setHorizontalGridLinesVisible(visible);
+            chart.setVerticalGridLinesVisible(visible);
+            xAxis.setTickLabelsVisible(visible);
+            xAxis.setTickMarkVisible(visible);
+            xAxis.setMinorTickVisible(visible);
+        }
     }
 }
